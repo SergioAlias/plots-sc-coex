@@ -45,12 +45,20 @@ df$Tissue <- factor(df$Tissue, levels = df$Tissue)
 
 ## Plotting
 
+pdf("outs/tissue_nHPO.pdf")
+
 ggplot(data = df, aes(x = Tissue, y = nHPOterms, fill = nHPOterms)) +
     geom_bar(stat = "identity", position = position_dodge())+
-    geom_text(aes(label = nHPOterms), hjust = -0.5, color = "black",
-            size=3.5) +
+    geom_text(aes(label = nHPOterms), hjust = 0, color = "black",
+            size=3) +
     scale_fill_gradient(low = "green", high = "darkgreen") +
     labs(x = element_blank(), y = "Number of HPO terms") +
     coord_flip() +
     theme_minimal() +
     theme(legend.title = element_blank())
+
+dev.off()
+
+## Save df
+
+write.table(df, file = "outs/tissue_nHPO.tsv", sep = "\t", row.names = FALSE)
