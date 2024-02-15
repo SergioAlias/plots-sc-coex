@@ -47,7 +47,7 @@ df$Tissue <- factor(df$Tissue, levels = df$Tissue)
 
 ggplot(data = df, aes(x = Tissue, y = nHPOterms, fill = nHPOterms)) +
     geom_bar(stat = "identity", position = position_dodge())+
-    geom_text(aes(label = nHPOterms), hjust = 1.6, color = "white",
+    geom_text(aes(label = nHPOterms), hjust = -0.5, color = "black",
             size=3.5) +
     scale_fill_gradient(low = "green", high = "darkgreen") +
     labs(x = element_blank(), y = "Number of HPO terms") +
