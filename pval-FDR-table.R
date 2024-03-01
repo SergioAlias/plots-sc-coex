@@ -44,7 +44,7 @@ tissues <- c("adipose-tissue",
              "testis")
 
 comentions <- fread(file.path(urales_home,
-                              "TFM/annotations/comention/ALL_ACT-HPO_0.05_add_s.tsv"))
+                              "TFM/annotations/comention/ALL_ACT-HPO_add_s.tsv"))
 
 colnames(comentions) <- c("ACT.id",
                           "cell_type",
