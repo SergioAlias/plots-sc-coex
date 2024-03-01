@@ -15,10 +15,16 @@ library(ggplot2)
 
 # Main script
 
-data <- table(read.table("data/coment_per_HPO.tsv",
+data <- read.table("data/resumen_pvals_FDR.tsv",
                         header = TRUE,
-                        sep = "\t",
-                        colClasses = "character")[[1]])
+                        sep = "\t")
+
+HPO_totales <- nrow(unique(data[, c("HPO_code", "tissue")]))
+HPO_totales_non_redundant <- length(unique(data$HPO_code))
+HPO_coex <- nrow(unique(data[complete.cases(data$coex_pval), ][, c("HPO_code", "tissue")]))
+HPO_coex_non_redundant <- length(unique(data[complete.cases(data$coex_pval), ]$HPO_code))
+
+data[complete.cases(data$coex_pval), ]
 
 df <- as.data.frame(data)
 colnames(df) <- c("Tissue", "nHPOterms")
