@@ -11,11 +11,12 @@
 # Libs
 
 library(ggplot2)
+library(dplyr)
 
 
 # Main script
 
-data <- read.table("data/resumen_pvals_FDR.tsv",
+data <- read.table("data/solo_comunes_pvals_FDR.tsv",
                         header = TRUE,
                         sep = "\t")
 
@@ -24,36 +25,42 @@ HPO_totales_non_redundant <- length(unique(data$HPO_code))
 HPO_coex <- nrow(unique(data[complete.cases(data$coex_pval), ][, c("HPO_code", "tissue")]))
 HPO_coex_non_redundant <- length(unique(data[complete.cases(data$coex_pval), ]$HPO_code))
 
-data[complete.cases(data$coex_pval), ]
-
 df <- as.data.frame(data)
-colnames(df) <- c("Tissue", "nHPOterms")
+
 
 ## Eliminar tissues no analizados
 
 tissues_to_remove <- c("lymph-node",
                         "rectum",
                         "placenta",
-                        "endometrium")
+                        "bone-marrow")
 
-df <- subset(df, !grepl(paste(tissues_to_remove, collapse="|"), Tissue))
+
+df <- subset(df, !grepl(paste(tissues_to_remove, collapse="|"), tissue))
 
 ## Cambiar guiones por espacios y primera letra en mayúsculas
 
-df$Tissue <- sapply(strsplit(as.character(df$Tissue), "-"), function(x) {
+df$tissue <- sapply(strsplit(as.character(df$tissue), "-"), function(x) {
     paste(toupper(substring(x, 1, 1)), substring(x, 2), sep = "", collapse = " ")
 })
+
+## Contar HPOs
+
+df<- df %>%
+  group_by(tissue) %>%
+  summarize(nHPOterms = n_distinct(HPO_code))
+
 
 ## Ordering
 
 df <- df[order(df$nHPOterms), ]
-df$Tissue <- factor(df$Tissue, levels = df$Tissue)
+df$tissue <- factor(df$tissue, levels = df$tissue)
 
 ## Plotting
 
 pdf("outs/tissue_nHPO.pdf")
 
-ggplot(data = df, aes(x = Tissue, y = nHPOterms, fill = nHPOterms)) +
+ggplot(data = df, aes(x = tissue, y = nHPOterms, fill = nHPOterms)) +
     geom_bar(stat = "identity", position = position_dodge())+
     geom_text(aes(label = nHPOterms), hjust = 0, color = "black",
             size=3) +

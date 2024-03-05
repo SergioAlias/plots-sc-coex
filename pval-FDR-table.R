@@ -152,5 +152,8 @@ for (i in seq_along(tissues)){
 column_order <- c("HPO_code", "HPO_name", "tissue", "cell_type", "coment_pval", "coex_pval", "fc_pval", "coex_FDR", "fc_FDR")
 
 results <- results[, ..column_order]
+nonas <- results[!is.na(results$coex_FDR),]
 
 fwrite(results, file = file.path(urales_home, "TFM/res_finales/resumen_pvals_FDR.tsv"), sep = "\t")
+fwrite(results, file = file.path(urales_home, "TFM/res_finales/solo_comunes_pvals_FDR.tsv"), sep = "\t")
+
