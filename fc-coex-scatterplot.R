@@ -22,20 +22,24 @@ data <- fread("/home/sergio/projects/plots-sc-coex/outs/solo_comunes_pvals_FDR.t
 
 dt <- data
 
+dt <- dt %>%
+  mutate(coex_FDR = coex_FDR + 1,
+        fc_FDR = fc_FDR + 1)
+
 dt$coex_FDR <- -log10(dt$coex_FDR)
-dt$coex_FDR <- -log10(dt$fc_FDR)
+dt$fc_FDR <- -log10(dt$fc_FDR)
+
+mod = lm(fc_FDR~coex_FDR, data = dt)
+modsum = summary(mod)
 
 pdf("outs/fc-coex-scatterplot.pdf")
 
 ggscatter(dt, x = "coex_FDR", y = "fc_FDR",
           xlab = "-log10 COEX adjusted p-value",
           ylab = "-log10 Fold change adjusted p-value",
-          color = "black", shape = 21, size = 3,
-          add = "reg.line",
-          add.params = list(color = "darkgreen", fill = "lightgray"),
-          conf.int = TRUE,
-          cor.coef = TRUE,
-          cor.coeff.args = list(method = "pearson", label.sep = "\n", geom = "label")
-)
+          color = "black", shape = 21, size = 3) +
+          stat_smooth(method = "lm", 
+            formula = y ~ x, 
+            geom = "smooth") 
 
 dev.off()

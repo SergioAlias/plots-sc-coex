@@ -31,8 +31,8 @@ df$tissue <- sapply(strsplit(as.character(df$tissue), "-"), function(x) {
 ## Contar celltypes y significativos coex y fdr
 
 df_sum <- df %>%
-         group_by(tissue, HPO_code) %>%
-         mutate(n_ct = length(cell_type),
+          group_by(tissue, HPO_code) %>%
+          mutate(n_ct = length(cell_type),
                 sign_ct_fc = sum(fc_FDR <= 0.001),
                 sign_ct_coex = sum(coex_FDR <= 0.001),
                 cell_type = NULL,
