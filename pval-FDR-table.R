@@ -63,29 +63,29 @@ comentions <- comentions[, c("HPO_code", "cell_type", "coment_pval"), with = FAL
 results <- data.table()
 
 for (i in seq_along(tissues)){
-  
+
   tissue <- tissues[i]
-  
+
   results_fc <- fread(file.path(urales_home,
-                             "TFM/res_finales/fc",
-                             paste0("wil_results_fc_",
-                                    tissue,
-                                    ".tsv")))
-  results_coex <- fread(file.path(urales_home,
-                                "TFM/res_finales/coex",
-                                paste0("wil_results_HPA_",
-                                       tissue,
-                                       ".tsv")))
-  results_fc_corrected <- fread(file.path(urales_home,
                                 "TFM/res_finales/fc",
                                 paste0("wil_results_fc_",
                                        tissue,
-                                       "_corrected.tsv")))
-  results_coex_corrected <- fread(file.path(urales_home,
+                                       ".tsv")))
+  results_coex <- fread(file.path(urales_home,
                                   "TFM/res_finales/coex",
                                   paste0("wil_results_HPA_",
                                          tissue,
-                                         "_corrected.tsv")))
+                                         ".tsv")))
+  results_fc_corrected <- fread(file.path(urales_home,
+                                          "TFM/res_finales/fc",
+                                          paste0("wil_results_fc_",
+                                                 tissue,
+                                                 "_corrected.tsv")))
+  results_coex_corrected <- fread(file.path(urales_home,
+                                            "TFM/res_finales/coex",
+                                            paste0("wil_results_HPA_",
+                                                   tissue,
+                                                   "_corrected.tsv")))
   results_coex$tissue <- gsub(tissue, "c", results_coex$tissue)
   results_coex$hpo <- gsub("HP", "HP:", results_coex$hpo)
   results_coex_corrected$tissue <- gsub(tissue, "c", results_coex_corrected$tissue)
