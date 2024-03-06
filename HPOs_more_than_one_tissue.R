@@ -56,4 +56,7 @@ common_table <- common_table %>%
   relocate(HPO_code, .before = HPO_name) %>%
   relocate(tissues, .after = HPO_name)
 
-write.table(common_table, file = "outs/HPOs_comunes.tsv", sep = "\t", row.names = FALSE)
+write.table(common_table,
+            file = "outs/HPOs_comunes.tsv",
+            sep = "\t",
+            row.names = FALSE)
