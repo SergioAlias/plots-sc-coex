@@ -19,7 +19,7 @@ library(dplyr)
 
 ## load file
 
-data <- fread("/home/sergio/projects/plots-sc-coex/outs/solo_comunes_pvals_FDR.tsv")
+data <- fread("/home/sergio/projects/plots-sc-coex/outs/solo_comunes_pvals_FDR.tsv") # nolint: line_length_linter.
 
 dt <- data
 
@@ -41,6 +41,9 @@ adj_rsquared <- modsum$adj.r.squared
 f <- modsum$fstatistic
 p <- pf(f[1], f[2], f[3], lower.tail = FALSE)
 attributes(p) <- NULL
+
+pearson <- cor.test(dt$coex_FDR, dt$fc_FDR, method = "pearson")
+spearman <- cor.test(dt$coex_FDR, dt$fc_FDR, method = "spearman")
 
 pdf("outs/fc-coex-scatterplot.pdf")
 
