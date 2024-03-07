@@ -16,7 +16,7 @@ library(dplyr)
 
 # Main script
 
-data <- read.table("data/solo_comunes_pvals_FDR.tsv",
+data <- read.table("outs/solo_comunes_pvals_FDR.tsv",
                         header = TRUE,
                         sep = "\t")
 
@@ -58,7 +58,7 @@ df$tissue <- factor(df$tissue, levels = df$tissue)
 
 ## Plotting
 
-pdf("outs/tissue_nHPO.pdf")
+png("outs/tissue_nHPO.png")
 
 ggplot(data = df, aes(x = tissue, y = nHPOterms, fill = nHPOterms)) +
     geom_bar(stat = "identity", position = position_dodge())+
