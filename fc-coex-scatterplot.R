@@ -45,7 +45,7 @@ attributes(p) <- NULL
 pearson <- cor.test(dt$coex_FDR, dt$fc_FDR, method = "pearson")
 spearman <- cor.test(dt$coex_FDR, dt$fc_FDR, method = "spearman")
 
-pdf("outs/fc-coex-scatterplot.pdf")
+png("outs/fc-coex-scatterplot.png")
 
 ggscatter(dt, x = "coex_FDR", y = "fc_FDR",
           xlab = "-log10 COEX adjusted p-value",
