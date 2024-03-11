@@ -37,6 +37,7 @@ df <- df %>%
   summarise(CoMent = (sum(coment_pval <= 0.001) / n()) * 100,
             FC = (sum(fc_FDR <= 0.001) / n()) * 100,
             COEX = (sum(coex_FDR <= 0.001) / n()) * 100)
+            # nCTcoment = sum(coment_pval <= 0.001))
 
 write.table(df,
             file = "outs/celltype_histogram.tsv",
