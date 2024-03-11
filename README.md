@@ -1,1 +1,1 @@
-Plots for the manuscript "Differential expression and co-expression reveal cell types relevant to rare disease phenotypes"
+Plots for the manuscript "Differential expression and co-expression reveal cell types relevant to rare disease phenotypes". Code can be found [here](https://github.com/SergioAlias/sc-coex).
